@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generador de exámenes para Moodle</title>
+<meta name="description" content="Crea bancos de preguntas con valores aleatorios y expórtalos a Moodle XML o a exámenes impresos con clave de respuestas.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%23c2410c%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-size=%2218%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22%3E?%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="lib/katex.min.css">
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<header class="barra">
+  <div class="marca"><span class="logo">?</span><span>Generador de exámenes</span></div>
+  <nav class="acciones">
+    <button data-a="nuevo" title="Empezar un banco vacío">📄 Nuevo</button>
+    <button data-a="abrir" title="Abrir un banco guardado (.json)">📂 Abrir</button>
+    <button data-a="guardar" title="Descargar el banco (.json)">💾 Guardar</button>
+    <button data-a="ejemplo" title="Cargar un banco de ejemplo">🧪 Ejemplo</button>
+    <span class="sep"></span>
+    <button data-a="exportar" class="prim" title="Descargar archivo para importar en Moodle">⬇ Exportar a Moodle</button>
+    <button data-a="imprimir" class="prim2" title="Crear examen en papel o PDF con clave">🖨 Examen impreso</button>
+    <a href="ayuda.html" target="_blank" rel="noopener" class="ayuda">📘 Ayuda</a>
+  </nav>
+</header>
+
+<div class="cuerpo">
+  <aside class="lateral">
+    <label class="lbl" for="nombreBanco">Nombre del banco</label>
+    <input id="nombreBanco" placeholder="p. ej. Cálculo — Parcial 1">
+    <div class="lista-cab">
+      <span>Preguntas <b id="nPreg">0</b></span>
+      <div class="nueva">
+        <button id="btnNueva" class="prim">＋ Nueva ▾</button>
+        <div class="menu-nueva" id="menuNueva" hidden>
+          <button data-tipo="numerica">🔢 Numérica</button>
+          <button data-tipo="opcion">🔘 Opción múltiple</button>
+          <button data-tipo="vf">✔ Verdadero / falso</button>
+          <button data-tipo="corta">✏ Respuesta corta</button>
+          <button data-tipo="ensayo">📝 Ensayo (abierta)</button>
+        </div>
+      </div>
+    </div>
+    <ul id="lista" class="lista"></ul>
+    <div class="resumen" id="resumen"></div>
+  </aside>
+
+  <main class="editor" id="editor"></main>
+
+  <section class="previa">
+    <div class="previa-cab">
+      <h2>Vista previa</h2>
+      <button id="otra" title="Generar otros valores">🎲 Otra variante</button>
+    </div>
+    <div id="previa" class="tarjeta"></div>
+    <details id="tablaVar">
+      <summary>Ver las primeras variantes</summary>
+      <div id="tablaVariantes"></div>
+    </details>
+  </section>
+</div>
+
+<div id="modal" class="modal" hidden>
+  <div class="dialogo" role="dialog" aria-modal="true" aria-labelledby="mTitulo">
+    <div class="d-cab"><h2 id="mTitulo"></h2><button class="d-x" data-cerrar aria-label="Cerrar">×</button></div>
+    <div class="d-cuerpo" id="mCuerpo"></div>
+    <div class="d-pie" id="mPie"></div>
+  </div>
+</div>
+
+<div id="impresion" hidden>
+  <div class="imp-barra">
+    <button id="impImprimir" class="prim">🖨 Imprimir / Guardar como PDF</button>
+    <button id="impCerrar">✕ Cerrar vista</button>
+    <span class="imp-nota">En el diálogo de impresión elige «Guardar como PDF» para obtener el archivo.</span>
+  </div>
+  <div id="impHojas"></div>
+</div>
+
+<input type="file" id="archivo" accept=".json" hidden>
+
+<script src="lib/katex.min.js"></script>
+<script src="lib/auto-render.min.js"></script>
+<script src="js/motor.js"></script>
+<script src="js/ejemplos.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
